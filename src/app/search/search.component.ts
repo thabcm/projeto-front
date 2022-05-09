@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { displayedColumnsConst, nationalitiesConst } from '../utils/const-list';
 
 @Component({
   selector: 'search',
@@ -11,20 +11,11 @@ import { DataService } from '../services/data.service';
 })
 export class SearchComponent {
   title = 'Projeto Viv';
-  apiUrl = 'https://randomuser.me/api/?results=3';
   data: any;
-  displayedColumns: string[] = ['picture', 'name', 'gender', 'nationality', 'email'];
-
-  nationalities: Array<any> = [
-    { name: 'Australia', value: 'AU' },
-    { name: 'Brasil', value: 'BR' },
-    { name: 'Canadá', value: 'CA' },
-    { name: 'França', value: 'FR' },
-    { name: 'Estados Unidos', value: 'US' }
-  ];
+  displayedColumns = displayedColumnsConst;
+  nationalities = nationalitiesConst;
 
   constructor(
-    private http : HttpClient,
     private dataService: DataService,
     private router: Router
     ) {}
@@ -47,7 +38,7 @@ export class SearchComponent {
     }
   }
 
-  // Salva dados de usuários no service
+  // Salva dados de usuários
   saveData() {
     this.dataService.setData(this.data.results);
     alert('Usuários salvos na lista!');
@@ -65,22 +56,14 @@ export class SearchComponent {
       let nationality = name;
       return nationality;
     })
+    let gender = this.form.value.gender;
 
-    if (this.form.value.gender == 'both') {
-      this.http.get(`${ this.apiUrl }&nat=${nationalities}`)
-      .subscribe(result => {
-        this.data = result;
-      }, (error) => {
-        alert(error.error);
-      });
-    } else {
-      this.http.get(`${ this.apiUrl }&gender=${this.form.value.gender}&nat=${nationalities}`)
-      .subscribe(result => {
-        this.data = result;
-      }, (error) => {
-        alert(error.error);
-      });
-    }
+    this.dataService.searchData(gender, nationalities)
+    .subscribe(result => {
+      this.data = result;
+    }, (error) => {
+      alert(error.error);
+    });
 
   }
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'data-list',
@@ -12,11 +11,10 @@ export class DataListComponent {
   displayedColumns: string[] = ['picture', 'name', 'gender', 'nationality', 'email'];
 
   constructor(
-    private dataService: DataService,
     private router: Router
   ) {}
   
-  // Recupera dados de usuários do service ao inicializar
+  // Recupera dados de usuários do storage ao inicializar
   ngOnInit(): void {
     const storage = sessionStorage.getItem('lista') || '';
     this.data = JSON.parse(storage);
