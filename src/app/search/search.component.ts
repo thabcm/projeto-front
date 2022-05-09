@@ -84,7 +84,4 @@ export class SearchComponent {
 
   }
 }
-function take(arg0: number): import("rxjs").OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
-}
 
