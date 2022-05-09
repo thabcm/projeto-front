@@ -18,7 +18,8 @@ export class DataListComponent {
   
   // Recupera dados de usuários do service ao inicializar
   ngOnInit(): void {
-    this.data = this.dataService.getData();
+    const storage = sessionStorage.getItem('lista') || '';
+    this.data = JSON.parse(storage);
   }
 
   // Volta para tela de pesquisa

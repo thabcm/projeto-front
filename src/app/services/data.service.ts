@@ -7,9 +7,7 @@ export class DataService {
     public data: Array<any> = [];
     
     public setData(result: Array<any>) {
-        result.map((name: string) => {
-            this.data.push(name);
-        })
+        sessionStorage.setItem('lista', JSON.stringify(result));
     }
 
     public getData() {
