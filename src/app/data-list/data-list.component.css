@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    margin: 16px 16px 16px;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 24px;
+    padding-bottom: 16px;
+}
+
+p {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 16px;
+}
+
+mat-radio-button {
+    padding-bottom: 8px;
+}
+
+button {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}

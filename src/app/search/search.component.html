@@ -1,0 +1,75 @@
+<div class="container">
+  <div>
+    <button mat-raised-button color="accent" (click)="viewData()">➜ Lista de usuários salvos</button>
+  </div>
+  
+  <p class="title">Seleção de filtros</p>
+      
+  <form [formGroup]="form" (ngSubmit)="searchData()">
+         
+      <section class="gender-radio">
+          <label class="labels" for="gender">Gênero:</label>
+          <div>
+            <input id="female" type="radio" value="female" name="gender" formControlName="gender">
+            <label for="female">Feminino</label>
+          </div>
+          <div>
+            <input id="male" type="radio" value="male" name="gender" formControlName="gender">
+            <label for="male">Masculino</label>
+          </div>
+          <div>
+            <input id="both" type="radio" value="both" name="gender" formControlName="gender">
+            <label for="both">Ambos</label>
+          </div>
+      </section>
+
+      <section class="nationalities-checkbox">
+        <label class="labels" for="gender">Nacionalidade:</label>
+        <div *ngFor="let nationality of nationalities; let i=index">
+          <input type="checkbox" formArrayName="nationalities" [value]="nationality.value" (change)="onCheckboxChange($event)" 
+          />
+          {{ nationality.name}}
+        </div>
+      </section>
+      
+      <button mat-raised-button color="accent" type="submit" [disabled]="!form.valid">Pesquisar 🔎</button>
+  </form>
+</div>
+
+<section class="container" *ngIf="data && data != 0">
+  <p class="users">Usuários encontrados:</p>
+
+  <table mat-table [dataSource]="data.results">
+  <ng-container matColumnDef="picture">
+    <th mat-header-cell *matHeaderCellDef> Foto </th>
+    <td mat-cell *matCellDef="let element"> <img src={{element.picture.thumbnail}}/> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let element"> {{element.name.first}} {{element.name.last}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef> Gênero </th>
+    <td mat-cell *matCellDef="let element"> {{element.gender == 'male' ? 'Masculino' : 'Feminino'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nationality">
+    <th mat-header-cell *matHeaderCellDef> Nacionalidade </th>
+    <td mat-cell *matCellDef="let element"> {{element.nat}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+<div>
+  <button mat-raised-button color="accent" class="save-button" (click)="saveData()">Salvar usuários</button>
+</div>
+</section>
