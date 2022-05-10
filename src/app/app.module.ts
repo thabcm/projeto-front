@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './search/search.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers, reducers } from './redux/reducer/app.reducer';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatFormFieldModule,
     HttpClientModule,
     MatTableModule,
-    MatGridListModule
+    MatGridListModule,
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [],
   bootstrap: [AppComponent]

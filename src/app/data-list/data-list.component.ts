@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'data-list',
@@ -11,17 +13,26 @@ export class DataListComponent {
   displayedColumns: string[] = ['picture', 'name', 'gender', 'nationality', 'email'];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private store: Store<any>
   ) {}
   
-  // Recupera dados de usuários do storage ao inicializar
   ngOnInit(): void {
-    const storage = sessionStorage.getItem('lista') || '';
-    this.data = JSON.parse(storage);
+    this.getStorage();
+  }
+
+  // Recupera dados de usuários do storage
+  public getStorage(): void {
+    this.store
+    .select('usersList')
+    .pipe(take(1))
+    .subscribe(usersList => {
+      this.data = usersList;
+    });
   }
 
   // Volta para tela de pesquisa
-  voltar() {
+  toSearch() {
     this.router.navigate(['/search']);
   }
 }

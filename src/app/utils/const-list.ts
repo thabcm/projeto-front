@@ -1,4 +1,4 @@
-export const apiUrlConst ='https://randomuser.me/api/?results=3';
+export const apiUrlConst ='https://randomuser.me/api/?results=10';
 
 export const displayedColumnsConst = ['picture', 'name', 'gender', 'nationality', 'email'];
 
